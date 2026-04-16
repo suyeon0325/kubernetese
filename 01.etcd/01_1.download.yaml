@@ -1,0 +1,12 @@
+## 설치
+## 바이너리 다운로드
+  ## 운영체제에 맞는 관련 바이너리를 Github 릴리즈페이지에서 다운하여 압출을 풀고 실행
+  ## Download Binary > Extract > Run etcd Service
+
+curl -L https://github.com/etcd-io/etcd/releases/download/ve.x.xx/etcd-v3.x.xx-linux-amd64.tar.gz -o etcd-v3.x.xx-linux-amd64.tar.gz
+
+tar xzvf etcd-v3.x.xx-linux-amd64.tar.gz
+
+./etcd 
+
+## etcd를 실행하면 기본 적으로 **2379** 포트에서 수신 대기하는 서비스가 시작됨. 시스템 서비스 or 클러스터 파드로 실행이 이상적
