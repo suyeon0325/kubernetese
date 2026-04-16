@@ -1,0 +1,33 @@
+## 역할
+## etcd 데이터 저장소에는 노드,파드,구성,시크릿,계정,역할,역할바인등과 같은 클러스터 관련 정보가 저장됨. 
+## kubectl get명령을 실행할 때 표시되는 모든 정보는 etcd 서버에서 가져온 것임
+
+## 클러스터 설정하는 방법에 따라 etcd는 다르게 배포됨
+## 1. 처음부터 배포하는것
+## 2. kube ADM 도구를 사용하여 배포하는 것 (모의고사환경에서는 ADM 도구를 사용하여 배포함)
+
+--
+
+## 1. 처음부터 배포
+## etcd 바이너리를 직접 다운로드하고, 바이너리를 설치한 다음 마스터노드에서 직접 etcd를 서비스로 구성하여 etcd를 배포함
+wget -q --https-only \ "https://github.com/coreos/etcd/releases/download/v3.x.x/etcd-v3.x.x-linux-amd64.tar.gz"
+
+etcd.service
+## 서비스에 전달되는 많은 옵션이 있음, 그줃 다수는 인증서에 관련됨
+
+client-urls
+## etcd가 수신하는 주소. 서버의 ip와 etcd가 수신하는 기본 포트인 2379에 있음
+예) --advertise-client-urls https://${INTERNAL_IP}:2379 ||
+## etcd 서버에 접속하려고 할 때, kube API 서버에서 구성해야 하는 URL
+
+
+--
+
+## kube ADM 도구를 사용하여 배포하는 것 
+## kube adm을 사용하여 클러스터에 설정하는 경우, etcd서버를 kube시스템 네임스페이스에 파드로 배포한다.
+
+kubectl get pods -n kube-system
+예) kube-system    etcd-master.      1/1.    Running     0     1h
+
+## 쿠버네티스가 저장한 모든 키를 나열하려면, etcd 컨트롤을 실행시킴
+kubectl exec etcd-master -n kube-system -- etcdctl get / --prefix --keys-only

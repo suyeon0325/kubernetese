@@ -1,0 +1,16 @@
+
+## 쿠버네티스는 특정 디렉터리구조에 데이터를 저장함 
+
+kubectl exec etcd-master -n kube-system etcdctl get / --prefix --keys-only
+
+## 루트 디렉터리는 Registry이며, 그 아래에는 Minions, pods, ReplicaSets, Deployments, Roles, Secrets 등과 같은 다양한 쿠버네티스 구성이 있음.
+## 고가용성 환경에서는 클러스터에 여러개의 마스터노드를 보유하게 되고, 마스터노드에 여러개의 etcd인스턴스가 분산됨 
+
+--
+
+## etcd 서비스 구성에서 올바른 매개변수를 설정하여, etcd인스턴스가 서로에 대해 알 수 있도록 해야함
+
+etcd.service
+예) --initial-cluster controller-0=https:..${CONTROLLER0_IP}:2380,controller-1=https://${CONTROLLER1_IP}:2380 \\
+
+## 초기 클러스터옵션은 etcd서비스의 여러 인스턴스를 지정해야하는 곳
